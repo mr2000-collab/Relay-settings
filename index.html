@@ -161,8 +161,9 @@
       <div class="small-text" id="consumerLoad"></div>
       <div class="small-text" id="hvRated"></div>
       <div class="small-text" id="shortCircuit"></div>
+      <div class="small-text" id="inrushCurrent"></div>
 
-      <div class="highlight">Relay Settings</div>
+      <div class="highlight">Ideal Relay Settings</div>
       <table>
         <thead>
           <tr>
@@ -277,21 +278,22 @@
       const consumerLoad = demand / (V * 1.732);
       const hvRated = transformer / (V * 1.732);
       const shortCircuit = hvRated * 100 / z;
+      const inrushCurrent = hvRated * 12; // Rule of thumb: 12x FLC
 
       const I1 = consumerLoad * overload / 100;  
-      const I2 = 0.5 * shortCircuit;              
-      const I5 = 0.95 * shortCircuit;             
+      const I2 = 1.25 * inrushCurrent;            // I>> setting: 125% of Inrush
+      const I5 = 0.9 * shortCircuit;             // I>>> setting: 90% of Short Circuit
       const I3 = 0.2 * hvRated;                   
       const I4 = 1.0 * hvRated;                   
-      const I2a = 7 * hvRated;                    
-
+      
       document.getElementById("consumerLoad").innerText = "Consumer Load: " + consumerLoad.toFixed(3) + " A";
       document.getElementById("hvRated").innerText = "Transformer HV Rated Current: " + hvRated.toFixed(3) + " A";
       document.getElementById("shortCircuit").innerText = "Transformer HV Short Circuit Current: " + shortCircuit.toFixed(3) + " A";
+      document.getElementById("inrushCurrent").innerText = "Est. Inrush Current: " + inrushCurrent.toFixed(3) + " A (12 × HV Rated)";
 
       document.getElementById("i1").innerHTML = I1.toFixed(3) + " A <span class='formula'>(= Consumer Load × Overload% ÷ 100)</span>";
-      document.getElementById("i2").innerHTML = I2.toFixed(3) + " A <span class='formula'>(= 50% × Short Circuit Current)</span>";
-      document.getElementById("i5").innerHTML = I5.toFixed(3) + " A <span class='formula'>(= 95% × Short Circuit Current)</span>";
+      document.getElementById("i2").innerHTML = I2.toFixed(3) + " A <span class='formula'>(= 125% × Est. Inrush Current)</span>";
+      document.getElementById("i5").innerHTML = I5.toFixed(3) + " A <span class='formula'>(= 90% × Short Circuit Current)</span>";
       document.getElementById("i3").innerHTML = I3.toFixed(3) + " A <span class='formula'>(= 20% × Transformer HV Rated Current)</span>";
       document.getElementById("i4").innerHTML = I4.toFixed(3) + " A <span class='formula'>(= 100% × Transformer HV Rated Current)</span>";
 
@@ -313,8 +315,8 @@
 
       if (relayChoice === "ashida") {
         document.getElementById("ri1").innerText = findNearestHigher(I1, ashidaData["I>"]);
-        document.getElementById("ri2").innerText = findNearestHigher(I2a, ashidaData["I>>"]);
-        document.getElementById("ri5").innerText = "-";
+        document.getElementById("ri2").innerText = findNearestHigher(I2, ashidaData["I>>"]); // Changed from I2a to I2
+        document.getElementById("ri5").innerText = "-"; // Ashida data doesn't have I>>>
         document.getElementById("ri3").innerText = findNearestHigher(I3, ashidaData["Ie>"]);
         document.getElementById("ri4").innerText = findNearestHigher(I4, ashidaData["Ie>>"]);
         document.getElementById("rt1").innerText = "0.1 (Normal Inverse)";
