@@ -5,179 +5,99 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Relay Setting Calculator</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9fafb;
-      margin: 0;
-      padding: 20px;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .calculator {
-      max-width: 950px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin: 10px 0 5px;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
-    }
-    button {
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      display: block;
-      margin: auto;
-    }
-    button:hover {
-      background: #1e40af;
-    }
-    .output {
-      margin-top: 20px;
-      padding: 15px;
-      background: #f1f5f9;
-      border-radius: 10px;
-    }
-    .small-text {
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-    .highlight {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 20px;
-      color: #111827;
-      text-align: center;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-      vertical-align: top;
-    }
-    th {
-      background: #e5e7eb;
-    }
-    .formula {
-      font-size: 12px;
-      color: #666;
-      display: block;
-      margin-top: 4px;
-    }
-    .note {
-      margin-top: 15px;
-      font-style: italic;
-      color: #444;
-      font-size: 14px;
-    }
-    .relay-options {
-      margin-top: 20px;
-      text-align: center;
-    }
-    .pill {
-      display: inline-block;
-      padding: 8px 16px;
-      margin: 5px;
-      border-radius: 25px;
-      background: #e5e7eb;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .pill.active {
-      background: #2563eb;
-      color: #fff;
-    }
-    .credits {
-      margin-top: 30px;
-      text-align: center;
-      font-size: 14px;
-      color: #555;
-      font-weight: bold;
-    }
-    .credits span {
-      cursor: pointer;
-    }
-    /* Floating hearts */
-    .heart {
-      position: fixed;
-      font-size: 20px;
-      color: red;
-      animation: floatUp 1.5s ease forwards;
-      pointer-events: none;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
-    }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; color: #333; }
+    h1 { text-align: center; color: #1f2937; margin-bottom: 25px; }
+    .calculator { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+    
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 600px) { .input-grid { grid-template-columns: 1fr; } }
+    
+    label { font-weight: 600; font-size: 14px; color: #4b5563; margin-bottom: 5px; display: block; }
+    input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #d1d5db; box-sizing: border-box; font-size: 16px; transition: border-color 0.2s; }
+    input:focus { border-color: #2563eb; outline: none; }
+    
+    button { grid-column: 1 / -1; background: #2563eb; color: #fff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; margin-top: 10px; transition: background 0.2s; width: 100%; }
+    button:hover { background: #1d4ed8; }
+    
+    .output { margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
+    .highlight { font-size: 18px; font-weight: 700; color: #111827; margin: 25px 0 10px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 5px; }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; border-radius: 8px; overflow: hidden; }
+    th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: center; }
+    th { background: #f3f4f6; color: #374151; font-weight: 600; }
+    .formula { font-size: 11px; color: #6b7280; display: block; margin-top: 4px; }
+    
+    .relay-options { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+    .pill { padding: 8px 20px; border-radius: 20px; background: #e5e7eb; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.2s; user-select: none; }
+    .pill:hover { background: #d1d5db; }
+    .pill.active { background: #2563eb; color: #fff; transform: scale(1.05); }
+
+    .system-info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+    .info-box { background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #e5e7eb; font-size: 14px; }
+    .info-box span { display: block; font-weight: bold; color: #2563eb; }
+
+    .credits { margin-top: 40px; text-align: center; font-size: 13px; color: #9ca3af; }
+    .heart { position: fixed; font-size: 20px; color: #ef4444; pointer-events: none; animation: floatUp 1.5s ease-out forwards; }
+    @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100px) scale(1.5); opacity: 0; } }
   </style>
 </head>
 <body>
+
   <h1>Relay Setting Calculator</h1>
   <div class="calculator">
-    <label>Voltage (Rated) [kV]</label>
-    <input type="number" id="voltage" step="0.01">
-
-    <label>Consumer Demand [kVA]</label>
-    <input type="number" id="demand" step="0.01">
-
-    <label>Connected Transformer Rating [kVA]</label>
-    <input type="number" id="transformer" step="0.01">
-
-    <label>% Impedance of Transformer</label>
-    <input type="number" id="impedance" step="0.01">
-
-    <label>% Overloading Allowed to Consumer</label>
-    <input type="number" id="overload" step="0.01">
-
-    <label>CTR</label>
-    <input type="number" id="ctr" step="1">
-
-    <button onclick="calculate()">Calculate</button>
+    <div class="input-grid">
+      <div>
+        <label>System Voltage (kV)</label>
+        <input type="number" id="voltage" step="0.01" placeholder="e.g. 11 or 33">
+      </div>
+      <div>
+        <label>Consumer Demand (kVA)</label>
+        <input type="number" id="demand" step="0.01" placeholder="e.g. 500">
+      </div>
+      <div>
+        <label>Transformer Rating (kVA)</label>
+        <input type="number" id="transformer" step="0.01" placeholder="e.g. 1000">
+      </div>
+      <div>
+        <label>Transformer Impedance (Z%)</label>
+        <input type="number" id="impedance" step="0.01" placeholder="e.g. 5">
+      </div>
+      <div>
+        <label>% Overload Margin Allowed</label>
+        <input type="number" id="overload" step="0.01" placeholder="e.g. 10">
+      </div>
+      <div>
+        <label>CT Ratio (Primary / 1)</label>
+        <input type="number" id="ctr" step="1" placeholder="e.g. 100">
+      </div>
+      <button onclick="calculate()">Calculate Settings</button>
+    </div>
 
     <div id="results" class="output" style="display:none;">
-      <div class="small-text" id="consumerLoad"></div>
-      <div class="small-text" id="hvRated"></div>
-      <div class="small-text" id="shortCircuit"></div>
-      <div class="small-text" id="inrushCurrent"></div>
+      
+      <div class="highlight" style="margin-top:0;">System Parameters</div>
+      <div class="system-info">
+        <div class="info-box">Consumer Load <span id="consumerLoad"></span></div>
+        <div class="info-box">HV Rated Current <span id="hvRated"></span></div>
+        <div class="info-box">Short Circuit Current <span id="shortCircuit"></span></div>
+        <div class="info-box">Inrush Current (12x) <span id="inrushCurrent"></span></div>
+      </div>
 
-      <div class="highlight">Ideal Relay Settings</div>
+      <div class="highlight">Calculated Primary Settings</div>
       <table>
         <thead>
           <tr>
-            <th></th>
-            <th>I&gt;</th>
-            <th>I&gt;&gt;</th>
-            <th>I&gt;&gt;&gt;</th>
-            <th>Ie&gt;</th>
-            <th>Ie&gt;&gt;</th>
+            <th>Setting</th>
+            <th>I&gt; (O/C)</th>
+            <th>I&gt;&gt; (Hi-Set)</th>
+            <th>I&gt;&gt;&gt; (Inst)</th>
+            <th>Ie&gt; (E/F)</th>
+            <th>Ie&gt;&gt; (Hi-E/F)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Pickup</td>
+            <td>Primary Amps</td>
             <td id="i1"></td>
             <td id="i2"></td>
             <td id="i5"></td>
@@ -185,83 +105,97 @@
             <td id="i4"></td>
           </tr>
           <tr>
-            <td>Time</td>
-            <td>0.1 (Normal Inverse)</td>
-            <td>200 ms</td>
-            <td>50 ms</td>
-            <td>0.1 (Normal Inverse)</td>
-            <td>50 ms</td>
+            <td>Calculation</td>
+            <td>Load + Margin</td>
+            <td style="color:#d97706; font-weight:bold;">Depends on Time*</td>
+            <td>90% of SC</td>
+            <td>20% Rated</td>
+            <td>100% Rated</td>
           </tr>
         </tbody>
       </table>
 
       <div class="relay-options">
-        <span class="pill" onclick="selectRelay('ashida')">Ashida</span>
+        <span class="pill" onclick="selectRelay('ashida')">Ashida (Fast)</span>
         <span class="pill" onclick="selectRelay('micom')">Micom P122</span>
-        <span class="pill" onclick="selectRelay('ref615')">REF615</span>
+        <span class="pill" onclick="selectRelay('ref615')">ABB REF615</span>
       </div>
 
-      <div class="highlight">Relay Selection Results</div>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>I&gt;</th>
-            <th>I&gt;&gt;</th>
-            <th>I&gt;&gt;&gt;</th>
-            <th>Ie&gt;</th>
-            <th>Ie&gt;&gt;</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Pickup</td>
-            <td id="ri1"></td>
-            <td id="ri2"></td>
-            <td id="ri5"></td>
-            <td id="ri3"></td>
-            <td id="ri4"></td>
-          </tr>
-          <tr>
-            <td>Time</td>
-            <td id="rt1"></td>
-            <td id="rt2"></td>
-            <td id="rt5"></td>
-            <td id="rt3"></td>
-            <td id="rt4"></td>
-          </tr>
-        </tbody>
-      </table>
+      <div id="relaySpecificResult" style="display:none;">
+        <div class="highlight">Final Relay Settings</div>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>I&gt;</th>
+              <th>I&gt;&gt;</th>
+              <th>I&gt;&gt;&gt;</th>
+              <th>Ie&gt;</th>
+              <th>Ie&gt;&gt;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pickup (Sec)</td>
+              <td id="ri1"></td>
+              <td id="ri2"></td>
+              <td id="ri5"></td>
+              <td id="ri3"></td>
+              <td id="ri4"></td>
+            </tr>
+            <tr>
+              <td>Time (TMS/sec)</td>
+              <td id="rt1"></td>
+              <td id="rt2" style="font-weight:bold; color:#2563eb;"></td>
+              <td id="rt5"></td>
+              <td id="rt3"></td>
+              <td id="rt4"></td>
+            </tr>
+            <tr>
+              <td>Logic Used</td>
+              <td>Normal Inverse</td>
+              <td id="logicMsg" style="font-size:11px; color:#666;"></td>
+              <td>Instant</td>
+              <td>Normal Inverse</td>
+              <td>Definite Time</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <div class="note">Note: Time is to be given according to relay coordination.</div>
     </div>
   </div>
 
   <div class="credits">
-    Made with <span onclick="spawnHearts()">❤️</span> by mr2000
+    Designed with <span onclick="spawnHearts()" style="cursor:pointer;">❤️</span> by mr2000
   </div>
 
   <script>
+    // --- DATASETS ---
+    // Ashida data assumes % settings or standard steps. We treat inputs as Secondary Amps for lookup.
     const ashidaData = {
-      "I>": [20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240],
-      "I>>": [50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1050,1100,1150,1200,1250,1300,1350,1400,1450,1500,1550,1600,1650,1700,1750,1800,1850,1900,1950,2000,2050,2100,2150,2200,2250,2300,2350,2400,2450,2500,2550,2600,2650,2700,2750,2800,2850,2900,2950,3000,3050,3100,3150,3200],
-      "Ie>": [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100],
-      "Ie>>": [50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1050,1100,1150,1200]
+      "I>": [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
+      "I>>": [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 6.0, 7.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0],
+      "Ie>": [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+      "Ie>>": [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]
     };
 
     let relayChoice = null;
 
+    // --- UTILS ---
     function findNearestHigher(value, arr) {
+      if(value > arr[arr.length-1]) return arr[arr.length-1] + "*"; // Maxed out
       for (let i = 0; i < arr.length; i++) {
         if (arr[i] >= value) return arr[i];
       }
-      return arr[arr.length - 1];
+      return arr[0];
     }
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
     }
 
+    // --- CALCULATION ---
     function calculate() {
       const V = parseFloat(document.getElementById("voltage").value);
       const demand = parseFloat(document.getElementById("demand").value);
@@ -275,89 +209,108 @@
         return;
       }
 
+      // 1. Base Calculations
       const consumerLoad = demand / (V * 1.732);
       const hvRated = transformer / (V * 1.732);
       const shortCircuit = hvRated * 100 / z;
-      const inrushCurrent = hvRated * 12; // Rule of thumb: 12x FLC
+      const inrushCurrent = hvRated * 12;
 
-      const I1 = consumerLoad * overload / 100;  
-      const I2 = 1.25 * inrushCurrent;            // I>> setting: 125% of Inrush
-      const I5 = 0.9 * shortCircuit;             // I>>> setting: 90% of Short Circuit
-      const I3 = 0.2 * hvRated;                   
-      const I4 = 1.0 * hvRated;                   
-      
-      document.getElementById("consumerLoad").innerText = "Consumer Load: " + consumerLoad.toFixed(3) + " A";
-      document.getElementById("hvRated").innerText = "Transformer HV Rated Current: " + hvRated.toFixed(3) + " A";
-      document.getElementById("shortCircuit").innerText = "Transformer HV Short Circuit Current: " + shortCircuit.toFixed(3) + " A";
-      document.getElementById("inrushCurrent").innerText = "Est. Inrush Current: " + inrushCurrent.toFixed(3) + " A (12 × HV Rated)";
+      // 2. Primary Current Settings (Ideal)
+      const I1 = consumerLoad * (100 + overload) / 100; // Corrected: Load + Margin
+      const I5 = 0.9 * shortCircuit;
+      const I3 = 0.2 * hvRated;
+      const I4 = 1.0 * hvRated;
 
-      document.getElementById("i1").innerHTML = I1.toFixed(3) + " A <span class='formula'>(= Consumer Load × Overload% ÷ 100)</span>";
-      document.getElementById("i2").innerHTML = I2.toFixed(3) + " A <span class='formula'>(= 125% × Est. Inrush Current)</span>";
-      document.getElementById("i5").innerHTML = I5.toFixed(3) + " A <span class='formula'>(= 90% × Short Circuit Current)</span>";
-      document.getElementById("i3").innerHTML = I3.toFixed(3) + " A <span class='formula'>(= 20% × Transformer HV Rated Current)</span>";
-      document.getElementById("i4").innerHTML = I4.toFixed(3) + " A <span class='formula'>(= 100% × Transformer HV Rated Current)</span>";
+      // Display Info
+      document.getElementById("consumerLoad").innerText = consumerLoad.toFixed(2) + " A";
+      document.getElementById("hvRated").innerText = hvRated.toFixed(2) + " A";
+      document.getElementById("shortCircuit").innerText = shortCircuit.toFixed(2) + " A";
+      document.getElementById("inrushCurrent").innerText = inrushCurrent.toFixed(2) + " A";
 
-      if (!relayChoice) {
-        // Clear relay results
-        document.getElementById("ri1").innerText = "";
-        document.getElementById("ri2").innerText = "";
-        document.getElementById("ri5").innerText = "";
-        document.getElementById("ri3").innerText = "";
-        document.getElementById("ri4").innerText = "";
-        document.getElementById("rt1").innerText = "";
-        document.getElementById("rt2").innerText = "";
-        document.getElementById("rt5").innerText = "";
-        document.getElementById("rt3").innerText = "";
-        document.getElementById("rt4").innerText = "";
-        document.getElementById("results").style.display = "block";
-        return;
-      }
-
-      if (relayChoice === "ashida") {
-        document.getElementById("ri1").innerText = findNearestHigher(I1, ashidaData["I>"]);
-        document.getElementById("ri2").innerText = findNearestHigher(I2, ashidaData["I>>"]); // Changed from I2a to I2
-        document.getElementById("ri5").innerText = "-"; // Ashida data doesn't have I>>>
-        document.getElementById("ri3").innerText = findNearestHigher(I3, ashidaData["Ie>"]);
-        document.getElementById("ri4").innerText = findNearestHigher(I4, ashidaData["Ie>>"]);
-        document.getElementById("rt1").innerText = "0.1 (Normal Inverse)";
-        document.getElementById("rt2").innerText = "50 ms";
-        document.getElementById("rt5").innerText = "-";
-        document.getElementById("rt3").innerText = "0.1 (Normal Inverse)";
-        document.getElementById("rt4").innerText = "50 ms";
-      } 
-      else if (relayChoice === "micom") {
-        document.getElementById("ri1").innerText = clamp(I1/ctr, 0.1, 40).toFixed(3);
-        document.getElementById("ri2").innerText = clamp(I2/ctr, 0.1, 40).toFixed(3);
-        document.getElementById("ri5").innerText = clamp(I5/ctr, 0.1, 40).toFixed(3);
-        document.getElementById("ri3").innerText = clamp(I3/ctr, 0.1, 40).toFixed(3);
-        document.getElementById("ri4").innerText = clamp(I4/ctr, 0.1, 40).toFixed(3);
-        document.getElementById("rt1").innerText = "0.1 (Normal Inverse)";
-        document.getElementById("rt2").innerText = "200 ms";
-        document.getElementById("rt5").innerText = "50 ms";
-        document.getElementById("rt3").innerText = "0.1 (Normal Inverse)";
-        document.getElementById("rt4").innerText = "50 ms";
-      }
-      else if (relayChoice === "ref615") {
-        document.getElementById("ri1").innerText = clamp(I1/ctr, 0.05, 50).toFixed(3);
-        document.getElementById("ri2").innerText = clamp(I2/ctr, 0.1, 40).toFixed(3);
-        document.getElementById("ri5").innerText = clamp(I5/ctr, 1, 40).toFixed(3);
-        document.getElementById("ri3").innerText = clamp(I3/ctr, 0.1, 40).toFixed(3);
-        document.getElementById("ri4").innerText = clamp(I4/ctr, 1, 40).toFixed(3);
-        document.getElementById("rt1").innerText = "0.1 (Normal Inverse)";
-        document.getElementById("rt2").innerText = "200 ms";
-        document.getElementById("rt5").innerText = "50 ms";
-        document.getElementById("rt3").innerText = "0.1 (Normal Inverse)";
-        document.getElementById("rt4").innerText = "50 ms";
-      }
+      // Display Ideal Primaries
+      document.getElementById("i1").innerHTML = I1.toFixed(2) + " A";
+      document.getElementById("i2").innerHTML = "<i>See Below</i>"; 
+      document.getElementById("i5").innerHTML = I5.toFixed(2) + " A";
+      document.getElementById("i3").innerHTML = I3.toFixed(2) + " A";
+      document.getElementById("i4").innerHTML = I4.toFixed(2) + " A";
 
       document.getElementById("results").style.display = "block";
+
+      if(relayChoice) {
+        applyRelayLogic(I1, I3, I4, I5, inrushCurrent, shortCircuit, ctr);
+      }
+    }
+
+    function applyRelayLogic(I1, I3, I4, I5, inrush, sc, ctr) {
+      document.getElementById("relaySpecificResult").style.display = "block";
+
+      // Helper to convert Primary to Secondary
+      const toSec = (p) => p / ctr;
+
+      // Determine Time Delay and I>> Logic
+      let timeI2 = 0;
+      let primaryI2 = 0;
+      let logicNote = "";
+
+      if (relayChoice === "ashida") {
+        timeI2 = 0.05; // 50ms (Fast)
+      } else {
+        timeI2 = 0.20; // 200ms (Slow)
+      }
+
+      // --- NEW LOGIC: Inrush Check ---
+      if (timeI2 < 0.1) {
+        // Time < 100ms: Must consider Inrush
+        primaryI2 = 1.25 * inrush;
+        logicNote = "Time < 100ms. Setting = 1.25 × Inrush";
+      } else {
+        // Time >= 100ms: Ignore Inrush, use fault capacity (safe setting)
+        // Setting it to 60% of Short Circuit as a safe high-set
+        primaryI2 = 0.60 * sc; 
+        logicNote = "Time ≥ 100ms. Setting = 0.6 × Short Ckt (Inrush ignored)";
+      }
+      // -------------------------------
+
+      // Update Ideal I>> Display
+      document.getElementById("i2").innerText = primaryI2.toFixed(2) + " A";
+
+      // Apply to Relays
+      if (relayChoice === "ashida") {
+        document.getElementById("ri1").innerText = findNearestHigher(toSec(I1), ashidaData["I>"]);
+        document.getElementById("ri2").innerText = findNearestHigher(toSec(primaryI2), ashidaData["I>>"]);
+        document.getElementById("ri5").innerText = "-"; 
+        document.getElementById("ri3").innerText = findNearestHigher(toSec(I3), ashidaData["Ie>"]);
+        document.getElementById("ri4").innerText = findNearestHigher(toSec(I4), ashidaData["Ie>>"]);
+        
+        document.getElementById("rt1").innerText = "0.1 (NI)";
+        document.getElementById("rt2").innerText = timeI2 + " s";
+        document.getElementById("rt5").innerText = "-";
+        document.getElementById("rt3").innerText = "0.1 (NI)";
+        document.getElementById("rt4").innerText = "0.05 s";
+      } 
+      else {
+        // Micom & REF615 Logic
+        document.getElementById("ri1").innerText = clamp(toSec(I1), 0.1, 40).toFixed(2);
+        document.getElementById("ri2").innerText = clamp(toSec(primaryI2), 0.1, 40).toFixed(2);
+        document.getElementById("ri5").innerText = clamp(toSec(I5), 0.1, 40).toFixed(2);
+        document.getElementById("ri3").innerText = clamp(toSec(I3), 0.1, 40).toFixed(2);
+        document.getElementById("ri4").innerText = clamp(toSec(I4), 0.1, 40).toFixed(2);
+        
+        document.getElementById("rt1").innerText = "0.1 (NI)";
+        document.getElementById("rt2").innerText = timeI2 + " s";
+        document.getElementById("rt5").innerText = "0.05 s";
+        document.getElementById("rt3").innerText = "0.1 (NI)";
+        document.getElementById("rt4").innerText = "0.05 s";
+      }
+      
+      document.getElementById("logicMsg").innerText = logicNote;
     }
 
     function selectRelay(name) {
       relayChoice = name;
       document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
       event.target.classList.add('active');
-      calculate();
+      calculate(); // Re-run with new relay selection
     }
 
     function spawnHearts() {
@@ -366,18 +319,11 @@
         heart.className = "heart";
         heart.textContent = "❤️";
         document.body.appendChild(heart);
-
         const credits = document.querySelector(".credits span");
         const rect = credits.getBoundingClientRect();
-        const x = rect.left + rect.width/2 + (Math.random()*100 - 50);
-        const y = rect.top;
-
-        heart.style.left = x + "px";
-        heart.style.top = y + "px";
-        heart.style.fontSize = (2 + Math.random()*40) + "px";
-        heart.style.transform = `rotate(${Math.random()*360}deg)`;
-
-        setTimeout(() => { heart.remove(); }, 1500);
+        heart.style.left = (rect.left + rect.width/2 + (Math.random()*40-20)) + "px";
+        heart.style.top = rect.top + "px";
+        setTimeout(() => heart.remove(), 1500);
       }
     }
   </script>
