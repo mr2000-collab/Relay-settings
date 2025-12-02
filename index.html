@@ -510,4 +510,14 @@
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.textContent = "❤️";
-        document.body.appendChil
+        document.body.appendChild(heart);
+        const credits = document.querySelector(".credits span");
+        const rect = credits.getBoundingClientRect();
+        heart.style.left = (rect.left + rect.width/2 + (Math.random()*40-20)) + "px";
+        heart.style.top = rect.top + "px";
+        setTimeout(() => heart.remove(), 1500);
+      }
+    }
+  </script>
+</body>
+</html>
